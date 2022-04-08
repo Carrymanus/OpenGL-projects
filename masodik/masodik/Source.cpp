@@ -28,6 +28,7 @@ std::vector<glm::vec3> myControlPoints = {
 GLuint VBO[numVBOs];
 GLuint VAO[numVAOs];
 GLboolean		isPoint;
+GLboolean		isPolygon;
 
 GLuint renderingProgram;
 
@@ -202,6 +203,7 @@ void init(GLFWwindow* window) {
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	isPoint = glGetUniformLocation(renderingProgram, "isPoint");
+	isPolygon = glGetUniformLocation(renderingProgram, "isPolygon");
 	glUseProgram(renderingProgram);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
@@ -217,13 +219,20 @@ void display(GLFWwindow* window, double currentTime) {
 	glBindVertexArray(VAO[0]);
 
 	glProgramUniform1f(renderingProgram, isPoint, false);
+	glProgramUniform1f(renderingProgram, isPolygon, false);
 	glLineWidth(2.0f);
 	glDrawArrays(GL_LINE_STRIP, 0, pointToDraw.size()-myControlPoints.size());
 
 	glProgramUniform1f(renderingProgram, isPoint, true);
+	glProgramUniform1f(renderingProgram, isPolygon, false);
 	glPointSize(8.0f);
 	glEnable(GL_POINT_SMOOTH);
 	glDrawArrays(GL_POINTS, pointToDraw.size() - myControlPoints.size(), myControlPoints.size());
+
+	glProgramUniform1f(renderingProgram, isPoint, false);
+	glProgramUniform1f(renderingProgram, isPolygon, true);
+	glDrawArrays(GL_LINE_LOOP, pointToDraw.size() - myControlPoints.size(), myControlPoints.size());
+
 
 	glBindVertexArray(0);
 }
