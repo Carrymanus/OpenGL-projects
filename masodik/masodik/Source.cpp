@@ -27,6 +27,7 @@ std::vector<glm::vec3> myControlPoints = {
 #define numVAOs 1
 GLuint VBO[numVBOs];
 GLuint VAO[numVAOs];
+GLboolean		isPoint;
 
 GLuint renderingProgram;
 
@@ -175,13 +176,16 @@ void generateBezierCurve(std::vector<glm::vec3> controlPoints) {
 		nextPoint = glm::vec3(0.0f, 0.0f, 0.0f);
 		for (int i = 0; i < controlPoints.size(); i++) {
 			B = blending(controlPoints.size() - 1, i, t);
-			nextPoint.x += B * controlPoints.at(i).x;
-			nextPoint.y += B * controlPoints.at(i).y;
-			nextPoint.z += B * controlPoints.at(i).z;
+			nextPoint += B * controlPoints.at(i);
 		}
 
 		pointToDraw.push_back(nextPoint);
 		t += increment;
+	}
+	pointToDraw.push_back(controlPoints.at(controlPoints.size() - 1));
+	for (int i = 0; i < controlPoints.size(); i++)
+	{
+		pointToDraw.push_back(controlPoints.at(i));
 	}
 }
 
@@ -197,6 +201,7 @@ void init(GLFWwindow* window) {
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	isPoint = glGetUniformLocation(renderingProgram, "isPoint");
 	glUseProgram(renderingProgram);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
@@ -211,9 +216,14 @@ void display(GLFWwindow* window, double currentTime) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBindVertexArray(VAO[0]);
 
+	glProgramUniform1f(renderingProgram, isPoint, false);
 	glLineWidth(2.0f);
-	glDrawArrays(GL_LINE_STRIP, 0, pointToDraw.size());
+	glDrawArrays(GL_LINE_STRIP, 0, pointToDraw.size()-myControlPoints.size());
 
+	glProgramUniform1f(renderingProgram, isPoint, true);
+	glPointSize(8.0f);
+	glEnable(GL_POINT_SMOOTH);
+	glDrawArrays(GL_POINTS, pointToDraw.size() - myControlPoints.size(), myControlPoints.size());
 
 	glBindVertexArray(0);
 }
