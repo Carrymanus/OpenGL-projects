@@ -30,6 +30,8 @@ GLuint VAO[numVAOs];
 GLboolean		isPoint;
 GLboolean		isPolygon;
 
+GLint dragged = -1;
+
 GLuint renderingProgram;
 
 bool checkOpenGLError() {
@@ -137,12 +139,6 @@ GLuint createShaderProgram()
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 }
 
-void cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
-}
-
-void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-}
-
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	window_width = width;
 	window_height = height;
@@ -188,6 +184,56 @@ void generateBezierCurve(std::vector<glm::vec3> controlPoints) {
 	{
 		pointToDraw.push_back(controlPoints.at(i));
 	}
+}
+
+GLfloat dist2(glm::vec3 P1, glm::vec3 P2) {
+	GLfloat dx = P1.x - P2.x;
+	GLfloat dy = P1.y - P2.y;
+
+	return dx * dx + dy * dy;
+}
+
+GLint getActivePoint(vector<glm::vec3> p, GLfloat sensitivity, GLfloat x, GLfloat y) {
+	GLfloat		s = sensitivity * sensitivity;
+	GLint		size = p.size();
+	GLfloat		xNorm = x / (window_width / 2) - 1.0f;
+	GLfloat		yNorm = y / (window_height / 2) - 1.0f;
+	glm::vec3	P = glm::vec3(xNorm, yNorm, 0.0f);
+
+	for (GLint i = size - 1; i > -1; i--)
+		if (dist2(p[i], P) < s)
+			return i;
+
+	return -1;
+}
+
+void cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
+	if (dragged >= 0) {
+		GLfloat	xNorm = xPos / (window_width / 2) - 1.0f;
+		GLfloat	yNorm = (window_height - yPos) / (window_height / 2) - 1.0f;
+
+		myControlPoints.at(dragged).x = xNorm;
+		myControlPoints.at(dragged).y = yNorm;
+
+		pointToDraw.clear();
+		generateBezierCurve(myControlPoints);
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+		glBufferData(GL_ARRAY_BUFFER, pointToDraw.size() * sizeof(glm::vec3), pointToDraw.data(), GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+}
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+		double	x, y;
+
+		glfwGetCursorPos(window, &x, &y);
+		dragged = getActivePoint(myControlPoints, 0.1f, x, window_height - y);
+	}
+
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+		dragged = -1;
 }
 
 void init(GLFWwindow* window) {
