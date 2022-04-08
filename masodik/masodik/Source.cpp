@@ -12,7 +12,7 @@ using namespace std;
 
 int		window_width = 600;
 int		window_height = 600;
-char	window_title[] = "Bezier curve";
+char	window_title[] = "Masodik beadando EY3455";
 
 std::vector<glm::vec3> pointToDraw;
 
@@ -168,7 +168,6 @@ void generateBezierCurve(std::vector<glm::vec3> controlPoints) {
 	glm::vec3	nextPoint;
 	GLfloat		t = 0.0f, B;
 	GLfloat		increment = 1.0f / 100.0f;
-
 	while (t <= 1.0f) {
 		nextPoint = glm::vec3(0.0f, 0.0f, 0.0f);
 		for (int i = 0; i < controlPoints.size(); i++) {
@@ -189,7 +188,6 @@ void generateBezierCurve(std::vector<glm::vec3> controlPoints) {
 GLfloat dist2(glm::vec3 P1, glm::vec3 P2) {
 	GLfloat dx = P1.x - P2.x;
 	GLfloat dy = P1.y - P2.y;
-
 	return dx * dx + dy * dy;
 }
 
@@ -227,11 +225,31 @@ void cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
 		double	x, y;
-
 		glfwGetCursorPos(window, &x, &y);
-		dragged = getActivePoint(myControlPoints, 0.1f, x, window_height - y);
+		if (getActivePoint(myControlPoints, 0.1f, x, window_height - y) != -1) {
+			dragged = getActivePoint(myControlPoints, 0.1f, x, window_height - y);
+		}
+		else {
+			myControlPoints.push_back(glm::vec3(x / (window_width / 2) - 1.0f, (window_height - y) / (window_height / 2) - 1.0f,0.0f));
+			pointToDraw.clear();
+			generateBezierCurve(myControlPoints);
+			glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+			glBufferData(GL_ARRAY_BUFFER, pointToDraw.size() * sizeof(glm::vec3), pointToDraw.data(), GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
 	}
-
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+		double	x, y;
+		glfwGetCursorPos(window, &x, &y);
+		if (getActivePoint(myControlPoints, 0.1f, x, window_height - y) != -1) {
+			myControlPoints.erase(myControlPoints.begin() + getActivePoint(myControlPoints, 0.1f, x, window_height - y));
+			pointToDraw.clear();
+			generateBezierCurve(myControlPoints);
+			glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+			glBufferData(GL_ARRAY_BUFFER, pointToDraw.size() * sizeof(glm::vec3), pointToDraw.data(), GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+	}
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 		dragged = -1;
 }
@@ -271,14 +289,13 @@ void display(GLFWwindow* window, double currentTime) {
 
 	glProgramUniform1f(renderingProgram, isPoint, true);
 	glProgramUniform1f(renderingProgram, isPolygon, false);
-	glPointSize(8.0f);
+	glPointSize(9.0f);
 	glEnable(GL_POINT_SMOOTH);
 	glDrawArrays(GL_POINTS, pointToDraw.size() - myControlPoints.size(), myControlPoints.size());
 
 	glProgramUniform1f(renderingProgram, isPoint, false);
 	glProgramUniform1f(renderingProgram, isPolygon, true);
 	glDrawArrays(GL_LINE_LOOP, pointToDraw.size() - myControlPoints.size(), myControlPoints.size());
-
 
 	glBindVertexArray(0);
 }
@@ -296,16 +313,13 @@ int main(void) {
 	if (glewInit() != GLEW_OK) { exit(EXIT_FAILURE); }
 	glfwSwapInterval(1);
 	init(window);
-
 	while (!glfwWindowShouldClose(window)) {
 		display(window, glfwGetTime());
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 	glfwDestroyWindow(window);
-
 	cleanUpScene();
-
 	glfwTerminate();
 	exit(EXIT_SUCCESS);
 }
