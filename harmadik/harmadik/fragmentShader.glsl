@@ -2,6 +2,7 @@
 
 in vec3 Normal;
 in vec3 FragPos;
+in vec3 myColor;
 
 uniform vec3 lightPos;
 
@@ -19,7 +20,7 @@ void main(void)
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
 
-    vec3 colorAttribute = vec3(0.0, 1.0, 0.0);        
+    vec3 colorAttribute = myColor;        
     vec3 result = (ambient + diffuse) * colorAttribute;
     color = vec4(result, 1.0);
 }

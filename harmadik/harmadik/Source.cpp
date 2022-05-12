@@ -30,47 +30,141 @@ unsigned int	invTMatrixLoc;
 unsigned int	lightPosLoc;
 
 float vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
+	 0.2f, -0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
+	-0.2f,  0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
 
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
+	 0.2f, -0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
+	-0.2f,  0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
 
-	-0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f,  0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f, -0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f, -0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f, -0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f,  0.2f,  -1.0f,  0.0f,  0.0f,
 
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f,  0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f, -0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f, -0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f, -0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f,  0.2f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f, -0.2f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f, -0.2f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  0.2f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  0.2f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f,  0.2f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f, -0.2f,  0.0f, -1.0f,  0.0f,
 
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+	-0.2f,  0.2f, -0.2f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f, -0.2f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  0.2f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  0.2f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.2f,  0.2f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.2f, -0.2f,  0.0f,  1.0f,  0.0f,
+
+
+
+
+
+	-0.2f, -0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
+	 0.2f, -0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
+	-0.2f,  0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
+
+	-0.2f, -0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
+	 0.2f, -0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
+	-0.2f,  0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
+
+	-0.2f,  0.2f,  1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f,  0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f,  1.0f,  -1.0f,  0.0f,  0.0f,
+
+	 0.2f,  0.2f,  1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f,  0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f,  1.0f,  1.0f,  0.0f,  0.0f,
+
+	-0.2f, -0.2f,  0.6f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  0.6f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  1.0f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f,  1.0f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f,  0.6f,  0.0f, -1.0f,  0.0f,
+
+	-0.2f,  0.2f,  0.6f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  0.6f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  1.0f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  1.0f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.2f,  1.0f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.2f,  0.6f,  0.0f,  1.0f,  0.0f,
+
+
+
+
+
+
+
+	-0.2f, -0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
+	 0.2f, -0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
+	-0.2f,  0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
+
+	-0.2f, -0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	 0.2f, -0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	-0.2f,  0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+
+	-0.2f,  0.2f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f,  -1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  -1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  -1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.2f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.2f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+
+	 0.2f,  0.2f,  -0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f,  -1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  -1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  -1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.2f,  -0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.2f,  -0.6f,  1.0f,  0.0f,  0.0f,
+
+	-0.2f, -0.2f,  -1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  -1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  -0.6f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.2f,  -0.6f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f,  -0.6f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.2f,  -1.0f,  0.0f, -1.0f,  0.0f,
+
+	-0.2f,  0.2f,  -1.0f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  -1.0f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  -0.6f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.2f,  -0.6f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.2f,  -0.6f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.2f,  -1.0f,  0.0f,  1.0f,  0.0f
 };
 
 #define numVBOs	1
@@ -79,16 +173,19 @@ GLuint			VBO[numVBOs];
 GLuint			VAO[numVAOs];
 
 GLuint		renderingProgram;
+GLfloat     radian = 9.0f;
 
-glm::mat4	model, view, projection = glm::perspective(glm::radians(45.0f), (float)window_width / (float)window_height, 0.1f, 100.0f);
+
+glm::mat4	model, view, projection = glm::perspective(glm::radians(55.0f), (float)window_width / (float)window_height, 0.1f, 100.0f);
 glm::mat4	invTmatrix, rotateM, scaleM;
 
 GLdouble	currentTime, deltaTime, lastTime = 0.0f;
 GLfloat		cameraSpeed;
+GLfloat     cameraLookAngle;
 
-glm::vec3	cameraPos = glm::vec3(1.0f, 1.0f, 2.0f),
+glm::vec3	cameraPos = glm::vec3(radian, 0.0f, 0.0f),
 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f),
-cameraUpVector = glm::vec3(0.0f, 1.0f, 0.0f),
+cameraUpVector = glm::vec3(0.0f, 0.0f, 1.0f),
 cameraMovingX = glm::vec3(-1.0f, 0.0f, 0.0f),
 cameraMovingY = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -267,18 +364,25 @@ void display() {
 	lastTime = currentTime;
 
 	cameraSpeed = 5.0f * (GLfloat)deltaTime;
-	if ((keyboard[GLFW_KEY_W]) || (keyboard[GLFW_KEY_UP]))
-		cameraPos += cameraSpeed * cameraMovingY;
+	if (keyboard[GLFW_KEY_UP]) {
+		cameraPos.z += 0.1f;
+	}
 
-	if ((keyboard[GLFW_KEY_S]) || (keyboard[GLFW_KEY_DOWN]))
-		cameraPos -= cameraSpeed * cameraMovingY;
+	if (keyboard[GLFW_KEY_DOWN]) {
+		cameraPos.z -= 0.1f;
+	}
 
-	if ((keyboard[GLFW_KEY_A]) || (keyboard[GLFW_KEY_LEFT]))
-		cameraPos += cameraSpeed * cameraMovingX;
+	if (keyboard[GLFW_KEY_LEFT]) {
+		cameraLookAngle -= cameraSpeed;
+		cameraPos.x = radian * cos(cameraLookAngle);
+		cameraPos.y = radian * sin(cameraLookAngle);
+	}
 
-	if ((keyboard[GLFW_KEY_D]) || (keyboard[GLFW_KEY_RIGHT]))
-		cameraPos -= cameraSpeed * cameraMovingX;
-
+	if (keyboard[GLFW_KEY_RIGHT]) {
+		cameraLookAngle += cameraSpeed;
+		cameraPos.x = radian * cos(cameraLookAngle);
+		cameraPos.y = radian * sin(cameraLookAngle);
+	}
 	lightPos = cameraPos;
 
 	computeModelMatrix();
@@ -300,7 +404,7 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 
 	glViewport(0, 0, width, height);
 
-	projection = glm::perspective(glm::radians(45.0f), (float)window_width / (float)window_height, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(55.0f), (float)window_width / (float)window_height, 0.1f, 100.0f);
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
