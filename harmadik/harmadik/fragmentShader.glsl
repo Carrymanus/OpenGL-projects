@@ -11,8 +11,8 @@ out vec4 color;
 void main(void)
 {
 	// AMBIENT
-    float ambientStrength = 0.25;
-    vec3 ambient = ambientStrength * vec3(1.0, 1.0, 1.0);
+    float ambientStrength = 0.4;
+    vec3 ambient = ambientStrength * vec3(1.0, 1.0, 0.0);
   	
     // DIFFUSE
     vec3 norm = normalize(Normal);
