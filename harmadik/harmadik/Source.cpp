@@ -24,99 +24,64 @@ int				window_height = 600;
 char			window_title[] = "Harmadik beadando EY3455";
 
 unsigned int	modelLoc;
+unsigned int	modelLocSphere;
 unsigned int	viewLoc;
+unsigned int	viewLocSphere;
 unsigned int	projectionLoc;
+unsigned int	projectionLocSphere;
 unsigned int	invTMatrixLoc;
+unsigned int	invTMatrixLocSphere;
 unsigned int	lightPosLoc;
 
+GLuint		lightXLoc;
+GLuint		lightYLoc;
+GLuint		lightZLoc;
+
+std::vector<glm::vec3> verticesVec;
+std::vector<glm::vec3> verticesSphere;
+
 float vertices[] = {
-	-0.2f, -0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
-	 0.2f, -0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
-	 0.2f,  0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
-	 0.2f,  0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
-	-0.2f,  0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
-	-0.2f, -0.2f, -0.2f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.4f, -0.2f,  0.0f,  0.0f, -1.0f,
+	 0.2f, -0.4f, -0.2f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.4f, -0.2f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.4f, -0.2f,  0.0f,  0.0f, -1.0f,
+	-0.2f,  0.4f, -0.2f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.4f, -0.2f,  0.0f,  0.0f, -1.0f,
 
-	-0.2f, -0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
-	 0.2f, -0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
-	 0.2f,  0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
-	 0.2f,  0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
-	-0.2f,  0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
-	-0.2f, -0.2f,  0.2f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.4f,  0.2f,  0.0f,  0.0f, 1.0f,
+	 0.2f, -0.4f,  0.2f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.4f,  0.2f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.4f,  0.2f,  0.0f,  0.0f, 1.0f,
+	-0.2f,  0.4f,  0.2f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.4f,  0.2f,  0.0f,  0.0f, 1.0f,
 
-	-0.2f,  0.2f,  0.2f,  -1.0f,  0.0f,  0.0f,
-	-0.2f,  0.2f, -0.2f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f, -0.2f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f, -0.2f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  0.2f,  -1.0f,  0.0f,  0.0f,
-	-0.2f,  0.2f,  0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f, -0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f, -0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f, -0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  0.2f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  0.2f,  -1.0f,  0.0f,  0.0f,
 
-	 0.2f,  0.2f,  0.2f,  1.0f,  0.0f,  0.0f,
-	 0.2f,  0.2f, -0.2f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f, -0.2f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f, -0.2f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  0.2f,  1.0f,  0.0f,  0.0f,
-	 0.2f,  0.2f,  0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f,  0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f, -0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f, -0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f, -0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  0.2f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f,  0.2f,  1.0f,  0.0f,  0.0f,
 
-	-0.2f, -0.2f, -0.2f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f, -0.2f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  0.2f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  0.2f,  0.0f, -1.0f,  0.0f,
-	-0.2f, -0.2f,  0.2f,  0.0f, -1.0f,  0.0f,
-	-0.2f, -0.2f, -0.2f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f, -0.2f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f, -0.2f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  0.2f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  0.2f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f,  0.2f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f, -0.2f,  0.0f, -1.0f,  0.0f,
 
-	-0.2f,  0.2f, -0.2f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f, -0.2f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  0.2f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  0.2f,  0.0f,  1.0f,  0.0f,
-	-0.2f,  0.2f,  0.2f,  0.0f,  1.0f,  0.0f,
-	-0.2f,  0.2f, -0.2f,  0.0f,  1.0f,  0.0f,
-
-
-
-
-
-	-0.2f, -0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
-	 0.2f, -0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
-	 0.2f,  0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
-	 0.2f,  0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
-	-0.2f,  0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
-	-0.2f, -0.2f, 0.6f,  0.0f,  0.0f, -1.0f,
-
-	-0.2f, -0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
-	 0.2f, -0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
-	 0.2f,  0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
-	 0.2f,  0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
-	-0.2f,  0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
-	-0.2f, -0.2f,  1.0f,  0.0f,  0.0f, 1.0f,
-
-	-0.2f,  0.2f,  1.0f,  -1.0f,  0.0f,  0.0f,
-	-0.2f,  0.2f,  0.6f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  0.6f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  0.6f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  1.0f,  -1.0f,  0.0f,  0.0f,
-	-0.2f,  0.2f,  1.0f,  -1.0f,  0.0f,  0.0f,
-
-	 0.2f,  0.2f,  1.0f,  1.0f,  0.0f,  0.0f,
-	 0.2f,  0.2f,  0.6f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  0.6f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  0.6f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  1.0f,  1.0f,  0.0f,  0.0f,
-	 0.2f,  0.2f,  1.0f,  1.0f,  0.0f,  0.0f,
-
-	-0.2f, -0.2f,  0.6f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  0.6f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  1.0f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  1.0f,  0.0f, -1.0f,  0.0f,
-	-0.2f, -0.2f,  1.0f,  0.0f, -1.0f,  0.0f,
-	-0.2f, -0.2f,  0.6f,  0.0f, -1.0f,  0.0f,
-
-	-0.2f,  0.2f,  0.6f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  0.6f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  1.0f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  1.0f,  0.0f,  1.0f,  0.0f,
-	-0.2f,  0.2f,  1.0f,  0.0f,  1.0f,  0.0f,
-	-0.2f,  0.2f,  0.6f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f, -0.2f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f, -0.2f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  0.2f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  0.2f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f,  0.2f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f, -0.2f,  0.0f,  1.0f,  0.0f,
 
 
 
@@ -124,60 +89,116 @@ float vertices[] = {
 
 
 
-	-0.2f, -0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
-	 0.2f, -0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
-	 0.2f,  0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
-	 0.2f,  0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
-	-0.2f,  0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
-	-0.2f, -0.2f, -1.0f,  0.0f,  0.0f, -1.0f,
 
-	-0.2f, -0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
-	 0.2f, -0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
-	 0.2f,  0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
-	 0.2f,  0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
-	-0.2f,  0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
-	-0.2f, -0.2f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.4f, 0.6f,  0.0f,  0.0f, -1.0f,
+	 0.2f, -0.4f, 0.6f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.4f, 0.6f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.4f, 0.6f,  0.0f,  0.0f, -1.0f,
+	-0.2f,  0.4f, 0.6f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.4f, 0.6f,  0.0f,  0.0f, -1.0f,
 
-	-0.2f,  0.2f,  -0.6f,  -1.0f,  0.0f,  0.0f,
-	-0.2f,  0.2f,  -1.0f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  -1.0f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  -1.0f,  -1.0f,  0.0f,  0.0f,
-	-0.2f, -0.2f,  -0.6f,  -1.0f,  0.0f,  0.0f,
-	-0.2f,  0.2f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  1.0f,  0.0f,  0.0f, 1.0f,
+	 0.2f, -0.4f,  1.0f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.4f,  1.0f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.4f,  1.0f,  0.0f,  0.0f, 1.0f,
+	-0.2f,  0.4f,  1.0f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.4f,  1.0f,  0.0f,  0.0f, 1.0f,
 
-	 0.2f,  0.2f,  -0.6f,  1.0f,  0.0f,  0.0f,
-	 0.2f,  0.2f,  -1.0f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  -1.0f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  -1.0f,  1.0f,  0.0f,  0.0f,
-	 0.2f, -0.2f,  -0.6f,  1.0f,  0.0f,  0.0f,
-	 0.2f,  0.2f,  -0.6f,  1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  1.0f,  -1.0f,  0.0f,  0.0f,
 
-	-0.2f, -0.2f,  -1.0f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  -1.0f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  -0.6f,  0.0f, -1.0f,  0.0f,
-	 0.2f, -0.2f,  -0.6f,  0.0f, -1.0f,  0.0f,
-	-0.2f, -0.2f,  -0.6f,  0.0f, -1.0f,  0.0f,
-	-0.2f, -0.2f,  -1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f,  0.4f,  1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f,  0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f,  1.0f,  1.0f,  0.0f,  0.0f,
 
-	-0.2f,  0.2f,  -1.0f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  -1.0f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  -0.6f,  0.0f,  1.0f,  0.0f,
-	 0.2f,  0.2f,  -0.6f,  0.0f,  1.0f,  0.0f,
-	-0.2f,  0.2f,  -0.6f,  0.0f,  1.0f,  0.0f,
-	-0.2f,  0.2f,  -1.0f,  0.0f,  1.0f,  0.0f
+	-0.2f, -0.4f,  0.6f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  0.6f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  1.0f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f,  1.0f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f,  0.6f,  0.0f, -1.0f,  0.0f,
+
+	-0.2f,  0.4f,  0.6f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  0.6f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  1.0f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  1.0f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f,  1.0f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f,  0.6f,  0.0f,  1.0f,  0.0f,
+
+
+
+
+
+
+
+	-0.2f, -0.4f, -1.0f,  0.0f,  0.0f, -1.0f,
+	 0.2f, -0.4f, -1.0f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.4f, -1.0f,  0.0f,  0.0f, -1.0f,
+	 0.2f,  0.4f, -1.0f,  0.0f,  0.0f, -1.0f,
+	-0.2f,  0.4f, -1.0f,  0.0f,  0.0f, -1.0f,
+	-0.2f, -0.4f, -1.0f,  0.0f,  0.0f, -1.0f,
+
+	-0.2f, -0.4f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	 0.2f, -0.4f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.4f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	 0.2f,  0.4f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	-0.2f,  0.4f,  -0.6f,  0.0f,  0.0f, 1.0f,
+	-0.2f, -0.4f,  -0.6f,  0.0f,  0.0f, 1.0f,
+
+	-0.2f,  0.4f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  -1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  -1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  -1.0f,  -1.0f,  0.0f,  0.0f,
+	-0.2f, -0.4f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+	-0.2f,  0.4f,  -0.6f,  -1.0f,  0.0f,  0.0f,
+
+	 0.2f,  0.4f,  -0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f,  -1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  -1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  -1.0f,  1.0f,  0.0f,  0.0f,
+	 0.2f, -0.4f,  -0.6f,  1.0f,  0.0f,  0.0f,
+	 0.2f,  0.4f,  -0.6f,  1.0f,  0.0f,  0.0f,
+
+	-0.2f, -0.4f,  -1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  -1.0f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  -0.6f,  0.0f, -1.0f,  0.0f,
+	 0.2f, -0.4f,  -0.6f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f,  -0.6f,  0.0f, -1.0f,  0.0f,
+	-0.2f, -0.4f,  -1.0f,  0.0f, -1.0f,  0.0f,
+
+	-0.2f,  0.4f,  -1.0f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  -1.0f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  -0.6f,  0.0f,  1.0f,  0.0f,
+	 0.2f,  0.4f,  -0.6f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f,  -0.6f,  0.0f,  1.0f,  0.0f,
+	-0.2f,  0.4f,  -1.0f,  0.0f,  1.0f,  0.0f
 };
 
 #define numVBOs	1
 #define numVAOs	1
 GLuint			VBO[numVBOs];
 GLuint			VAO[numVAOs];
+GLuint			VBOSphere[numVBOs];
+GLuint			VAOSphere[numVAOs];
 
 GLuint		renderingProgram;
+GLuint		renderingProgramSphere;
 GLfloat     radian = 9.0f;
 
 
 glm::mat4	model, view, projection = glm::perspective(glm::radians(55.0f), (float)window_width / (float)window_height, 0.1f, 100.0f);
+glm::mat4	modelSphere = model;
+glm::mat4	viewSphere = view;
+glm::mat4	projectionSphere = projection;
 glm::mat4	invTmatrix, rotateM, scaleM;
+glm::mat4	invTmatrixSphere,rotateMSphere,scaleMSphere;
 
 GLdouble	currentTime, deltaTime, lastTime = 0.0f;
 GLfloat		cameraSpeed;
@@ -189,7 +210,33 @@ cameraUpVector = glm::vec3(0.0f, 0.0f, 1.0f),
 cameraMovingX = glm::vec3(-1.0f, 0.0f, 0.0f),
 cameraMovingY = glm::vec3(0.0f, 1.0f, 0.0f);
 
-glm::vec3	lightPos;
+glm::vec3	lightPos = glm::vec3(2.0*radian,0.0f,0.0f);
+GLfloat     lightLookAngle;
+
+void generateSphere(double r, int lats, int longs) {
+	int i, j;
+	verticesSphere.clear();
+	for (i = 0; i <= lats; i++) {
+		double lat0 = 3.14 * (-0.5 + (double)(i - 1) / lats);
+		double z0 = sin(lat0);
+		double zr0 = cos(lat0);
+
+		double lat1 = 3.14 * (-0.5 + (double)i / lats);
+		double z1 = sin(lat1);
+		double zr1 = cos(lat1);
+
+		for (j = 0; j <= longs; j++) {
+			double lng = 2 * 3.14 * (double)(j - 1) / longs;
+			double x = cos(lng);
+			double y = sin(lng);
+
+			verticesSphere.push_back(glm::vec3(x * zr0, y * zr0, z0));
+			verticesSphere.push_back(glm::vec3(r * x * zr0, r * y * zr0, r * z0));
+			verticesSphere.push_back(glm::vec3(x * zr1, y * zr1, z1));
+			verticesSphere.push_back(glm::vec3(r * x * zr1, r * y * zr1, r * z1));
+		}
+	}
+}
 
 bool checkOpenGLError() {
 	bool foundError = false;
@@ -291,6 +338,56 @@ GLuint createShaderProgram() {
 	return vfProgram;
 }
 
+GLuint createShaderProgramSphere() {
+
+	GLint vertCompiled;
+	GLint fragCompiled;
+	GLint linked;
+
+	string vertShaderStr = readShaderSource("vertexShaderSphere.glsl");
+	string fragShaderStr = readShaderSource("fragmentShaderSphere.glsl");
+
+	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
+	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	const char* vertShaderSrc = vertShaderStr.c_str();
+	const char* fragShaderSrc = fragShaderStr.c_str();
+
+	glShaderSource(vShader, 1, &vertShaderSrc, NULL);
+	glShaderSource(fShader, 1, &fragShaderSrc, NULL);
+
+	glCompileShader(vShader);
+	checkOpenGLError();
+	glGetShaderiv(vShader, GL_COMPILE_STATUS, &vertCompiled);
+	if (vertCompiled != 1) {
+		cout << "vertex compilation failed" << endl;
+		printShaderLog(vShader);
+	}
+	glCompileShader(fShader);
+	checkOpenGLError();
+	glGetShaderiv(vShader, GL_COMPILE_STATUS, &fragCompiled);
+	if (fragCompiled != 1) {
+		cout << "fragment compilation failed" << endl;
+		printShaderLog(fShader);
+	}
+	GLuint vfProgram = glCreateProgram();
+	glAttachShader(vfProgram, vShader);
+	glAttachShader(vfProgram, fShader);
+
+	glLinkProgram(vfProgram);
+	checkOpenGLError();
+	glGetProgramiv(vfProgram, GL_LINK_STATUS, &linked);
+	if (linked != 1) {
+		cout << "linking failed" << endl;
+		printProgramLog(vfProgram);
+	}
+
+	glDeleteShader(vShader);
+	glDeleteShader(fShader);
+
+	return vfProgram;
+}
+
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if ((action == GLFW_PRESS) && (key == GLFW_KEY_ESCAPE))
@@ -310,9 +407,14 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
 
 void computeModelMatrix() {
 	scaleM = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.5f, 1.0f));
-
 	model = scaleM;
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void computeModelMatrixSphere() {
+	scaleMSphere = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.5f, 1.0f));
+	modelSphere = scaleMSphere;
+	glUniformMatrix4fv(modelLocSphere, 1, GL_FALSE, glm::value_ptr(modelSphere));
 }
 
 void computeCameraMatrix() {
@@ -320,12 +422,27 @@ void computeCameraMatrix() {
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 }
 
+void computeCameraMatrixSphere() {
+	viewSphere = glm::lookAt(cameraPos, cameraTarget, cameraUpVector);
+	glUniformMatrix4fv(viewLocSphere, 1, GL_FALSE, glm::value_ptr(viewSphere));
+}
+
+void generateVertices() {
+	verticesVec.clear();
+	for (int i = 0; i <= sizeof(vertices) / 3; i += 3)
+	{
+		verticesVec.push_back(glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]));
+	}
+}
+
+
 void init(GLFWwindow* window) {
 	renderingProgram = createShaderProgram();
 	glGenBuffers(numVBOs, VBO);
 	glGenVertexArrays(numVAOs, VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	generateVertices();
+	glBufferData(GL_ARRAY_BUFFER, verticesVec.size() * sizeof(glm::vec3), verticesVec.data(), GL_STATIC_DRAW);
 	glBindVertexArray(VAO[0]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -334,14 +451,35 @@ void init(GLFWwindow* window) {
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(renderingProgram);
-
 	modelLoc = glGetUniformLocation(renderingProgram, "model");
 	viewLoc = glGetUniformLocation(renderingProgram, "view");
 	projectionLoc = glGetUniformLocation(renderingProgram, "projection");
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
 	invTMatrixLoc = glGetUniformLocation(renderingProgram, "invTMatrix");
 	lightPosLoc = glGetUniformLocation(renderingProgram, "lightPos");
+
+	renderingProgramSphere = createShaderProgramSphere();
+	glGenBuffers(numVBOs, VBOSphere);
+	glGenVertexArrays(numVAOs, VAOSphere);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOSphere[0]);
+	generateSphere(0.5,20,20);
+	glBufferData(GL_ARRAY_BUFFER, verticesSphere.size() * sizeof(glm::vec3), verticesSphere.data(), GL_STATIC_DRAW);
+	glBindVertexArray(VAOSphere[0]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,  3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,  3 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glUseProgram(renderingProgramSphere);
+	lightXLoc = glGetUniformLocation(renderingProgramSphere, "lightX");
+	lightYLoc = glGetUniformLocation(renderingProgramSphere, "lightY");
+	lightZLoc = glGetUniformLocation(renderingProgramSphere, "lightZ");
+	modelLocSphere = glGetUniformLocation(renderingProgramSphere, "modelSphere");
+	viewLocSphere = glGetUniformLocation(renderingProgramSphere, "viewSphere");
+	projectionLocSphere = glGetUniformLocation(renderingProgramSphere, "projectionSphere");
+	glUniformMatrix4fv(projectionLocSphere, 1, GL_FALSE, glm::value_ptr(projectionSphere));
+	invTMatrixLocSphere = glGetUniformLocation(renderingProgramSphere, "invTMatrixSphere");
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glEnable(GL_DEPTH_TEST);
@@ -350,7 +488,9 @@ void init(GLFWwindow* window) {
 void cleanUpScene() {
 	glfwDestroyWindow(window);
 	glDeleteBuffers(numVBOs, VBO);
+	glDeleteBuffers(numVBOs, VBOSphere);
 	glDeleteProgram(renderingProgram);
+	glDeleteProgram(renderingProgramSphere);
 	glfwTerminate();
 
 	exit(EXIT_SUCCESS);
@@ -383,18 +523,37 @@ void display() {
 		cameraPos.x = radian * cos(cameraLookAngle);
 		cameraPos.y = radian * sin(cameraLookAngle);
 	}
-	lightPos = cameraPos;
+
+	lightLookAngle += cameraSpeed/2;
+	lightPos.x = 2.0 * radian * cos(lightLookAngle);
+	lightPos.y = 2.0 * radian * sin(lightLookAngle);
+	glUseProgram(renderingProgram);
 
 	computeModelMatrix();
 	computeCameraMatrix();
 
 	invTmatrix = glm::inverseTranspose(view * model);
 	glUniformMatrix4fv(invTMatrixLoc, 1, GL_FALSE, glm::value_ptr(invTmatrix));
-
 	glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
-
 	glBindVertexArray(VAO[0]);
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices));
+	generateVertices();
+	glDrawArrays(GL_TRIANGLES, 0, verticesVec.size()-1);
+	glBindVertexArray(0);
+
+
+	glUseProgram(renderingProgramSphere);
+	computeModelMatrixSphere();
+	computeCameraMatrixSphere();
+
+	glProgramUniform1f(renderingProgramSphere, lightXLoc, lightPos.x);
+	glProgramUniform1f(renderingProgramSphere, lightYLoc, lightPos.y);
+	glProgramUniform1f(renderingProgramSphere, lightZLoc, lightPos.z);
+
+	invTmatrixSphere = glm::inverseTranspose(viewSphere * modelSphere);
+	glUniformMatrix4fv(invTMatrixLocSphere, 1, GL_FALSE, glm::value_ptr(invTmatrixSphere));
+	glBindVertexArray(VAOSphere[0]);
+	generateSphere(0.5, 20, 20);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, verticesSphere.size());
 	glBindVertexArray(0);
 }
 
