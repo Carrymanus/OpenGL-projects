@@ -412,7 +412,7 @@ void computeModelMatrix() {
 }
 
 void computeModelMatrixSphere() {
-	scaleMSphere = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.5f, 1.0f));
+	scaleMSphere = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	modelSphere = scaleMSphere;
 	glUniformMatrix4fv(modelLocSphere, 1, GL_FALSE, glm::value_ptr(modelSphere));
 }
@@ -462,7 +462,7 @@ void init(GLFWwindow* window) {
 	glGenBuffers(numVBOs, VBOSphere);
 	glGenVertexArrays(numVAOs, VAOSphere);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOSphere[0]);
-	generateSphere(0.5,20,20);
+	generateSphere(0.5,180,180);
 	glBufferData(GL_ARRAY_BUFFER, verticesSphere.size() * sizeof(glm::vec3), verticesSphere.data(), GL_STATIC_DRAW);
 	glBindVertexArray(VAOSphere[0]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,  3 * sizeof(float), (void*)0);
@@ -487,6 +487,8 @@ void init(GLFWwindow* window) {
 
 void cleanUpScene() {
 	glfwDestroyWindow(window);
+	verticesVec.clear();
+	verticesSphere.clear();
 	glDeleteBuffers(numVBOs, VBO);
 	glDeleteBuffers(numVBOs, VBOSphere);
 	glDeleteProgram(renderingProgram);
@@ -536,7 +538,6 @@ void display() {
 	glUniformMatrix4fv(invTMatrixLoc, 1, GL_FALSE, glm::value_ptr(invTmatrix));
 	glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
 	glBindVertexArray(VAO[0]);
-	generateVertices();
 	glDrawArrays(GL_TRIANGLES, 0, verticesVec.size()-1);
 	glBindVertexArray(0);
 
@@ -552,7 +553,6 @@ void display() {
 	invTmatrixSphere = glm::inverseTranspose(viewSphere * modelSphere);
 	glUniformMatrix4fv(invTMatrixLocSphere, 1, GL_FALSE, glm::value_ptr(invTmatrixSphere));
 	glBindVertexArray(VAOSphere[0]);
-	generateSphere(0.5, 20, 20);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, verticesSphere.size());
 	glBindVertexArray(0);
 }
