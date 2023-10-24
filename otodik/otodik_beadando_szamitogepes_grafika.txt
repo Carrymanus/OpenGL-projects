@@ -1,0 +1,7 @@
+A második feladat minimumkövetelménye, hogy egy kocka forogjon a forgástengelye körül, miközben fel és le is mozog. Minden oldala más színű legyen, láthatóség szerint helyesen ábrázolva. Kamerával lehessen előre, hátra, jobbra, balra, fel és le is mozogni a tanultak szerint. A kockát háromszögekből össze lehet építeni, tehát lényegében erre alkalmas 12 háromszög egy kockát fog eredményezni.
+
++1 pont: A kocka "alsó" lapjával egy szinten használjunk valamilyen "padlót", ez lényegében pl. két új nagyobb háromszöget jelent, ami egy téglalapot határoz meg, és ez is része lesz a jelenetnek. Ennek is legyen egy saját színe, ami a kocka lapjaitól eltér.
+
++1 pont: A kocka egy billentyű lenyomására megáll, újbóli megnyomására tovább folytatja a mozgást.
+
++1 pont: A kocka felett a kockával ellentétes irányban forog folyamatosan egy négyzet önmagában.

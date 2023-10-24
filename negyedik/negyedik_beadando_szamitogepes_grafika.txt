@@ -1,0 +1,21 @@
+Az első beadandó feladat egy három Hermite-ívből (klasszikus 2 pontos és 2 érintővektoros eset, lásd Schwarcz Tibor: Bevezetés a számítógépi grafikába, 55. oldal) álló görbe készítése, ami aztán szabadon módosítható a geometriai adatokat meghatározó 8 ponttal. Az alábbi videó szemlélteti a működést, ez GeoGebrában készült, tehát a kinézetnek természetesen nem kell ilyennek lennie, csak a pontok mozgása által kiváltott alakváltozás szemléltetése végett készült.
+
+
+
+Az alapfeladat megoldásához elég, ha minden ugyanolyan színű és a pontok négyzetekként látszódnak, ez a minimumkövetelmény 2 pontért.
+
+
+
++1 pontért a kis négyzetek helyett a pontok szemléltetése körökkel történjen úgy, hogy azokat rendre mi magunk állítjuk elő a tanult módon a megfelelő vertexek definiálásával, ugyanolyan glDrawArrays hívásokkal, mint ahogy más objektumokat is rajzolunk.
+
+
+
++1 pontért a pontok, a szakaszok és maga a görbe is legyen más-más színű.
+
+
+
++1 pontért lehessen bal gombbal letenni először további két pontot, ami után egy újabb ív fűződik az eddigi háromhoz, az immáron utolsóként szereplő 4 pont által meghatározva. Ezt lehessen tovább csinálni legalább addig, ameddig hat ív nem csatlakozik egymáshoz.
+
+
+
+A pluszpontok egymástól függetlenül megszerezhetők, tehát ha mondjuk minden ugyanolyan színű, de működik a hozzáfűzés, akkor jár a pluszpont.
